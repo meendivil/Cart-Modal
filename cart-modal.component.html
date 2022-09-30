@@ -1,0 +1,57 @@
+<div class="modal right fade shoppingCartModal" id="shoppingCartModal" tabindex="-1" role="dialog" *ngIf="cart">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+			<div class="modal-body">
+				<h3>Mi carrito ({{cart.totalProducts}})</h3>
+
+				<div class="product-cart-content">
+					<div class="product-cart" *ngFor="let product of cart.products">
+						<div class="product-image">
+							<img [src]="product.image" alt="image">
+						</div>
+
+						<div class="product-content" *ngIf="product">
+							<h3><a href="{{product.url}}">{{product.title}}</a></h3>
+							<!-- <span>Blue / XS</span> -->
+							<div class="product-price">
+								<span> {{product.quantity}} </span>
+								<span> x </span>
+								<span class="price">{{product.totalPrice/100 | currency}}</span>
+							</div>
+						</div>
+						<td class="product-quantity">
+							<div class="input-counter">
+								<span class="minus-btn" (click)="minusItem(product)"><i class="fas fa-minus"></i></span>
+								<input type="text" [name]="product.sku" [(ngModel)]="product.quantity" readonly />
+								<span class="plus-btn" (click)="plusItem(product)"><i class="fas fa-plus"></i></span>
+							</div>
+						</td>
+
+					</div>
+				</div>
+
+				<div class="product-cart-subtotal">
+					<span>Subtotal</span>
+					<span class="subtotal">{{cart.originalTotalPrice/100 | currency}}</span>
+				</div>
+
+				<div class="product-cart-subtotal">
+					<span>Envío</span>
+					<span class="subtotal">{{(cart.totalProducts > 0 ? 50 : 0) | currency}}</span>
+				</div>
+
+				<div class="product-cart-subtotal">
+					<span>Total</span>
+					<span class="subtotal">{{(cart.totalProducts > 0 ? (5000+cart.originalTotalPrice)/100 : 0) | currency}}</span>
+				</div>
+
+				<div class="product-cart-btn" *ngIf="cart.totalProducts != undefined && cart.totalProducts > 0">
+					<a routerLink="/checkout" class="btn btn-primary" data-dismiss="modal">Finalizar compra</a>
+					<a routerLink="/cart" class="btn btn-light" data-dismiss="modal">Ver carrito de compra</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
